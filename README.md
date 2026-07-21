@@ -141,7 +141,7 @@ The central product decision remained human-made: Verity does not claim that sta
 **Hackathon submission requirement:** before submitting, add the `/feedback` session ID from the primary Codex build thread here and to the Devpost form:
 
 ```text
-Codex /feedback Session ID: <PASTE-YOUR-SESSION-ID>
+Codex /feedback Session ID: 019f83a5-068d-73e2-812c-29d31ba9afdd
 ```
 
 ## Submission assets
