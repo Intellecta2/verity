@@ -25,7 +25,7 @@ Verity makes that link reviewable. It deliberately does **not** let automation s
 Requires Node.js 20+ on macOS or Linux (Windows is supported through WSL). No package install, account, API key, or network access is required.
 
 ```bash
-git clone <YOUR-REPOSITORY-URL>
+git clone https://github.com/Intellecta2/verity.git
 cd verity
 npm test
 npm run demo
@@ -42,7 +42,7 @@ On Linux, open `artifacts/verity-report.html` in your browser. The demo uses the
 This repository includes a GitHub Pages workflow. After pushing it to a public repository, enable **Settings → Pages → Source → GitHub Actions** once. Every push to `main` then tests Verity, builds the demo, and deploys the resulting report at:
 
 ```text
-https://<YOUR-GITHUB-USERNAME>.github.io/<YOUR-REPOSITORY-NAME>/
+https://intellecta2.github.io/verity/
 ```
 
 The hosted page is a **judgeable demo artifact**, not a hosted CLI service. The actual developer tool remains installable and testable from the repository.
