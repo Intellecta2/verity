@@ -1,0 +1,74 @@
+{
+  "$schema": "https://verity.dev/schema/v1",
+  "project": {
+    "name": "Cedar Storefront",
+    "version": "demo",
+    "description": "A deliberately small API used to demonstrate proof-carrying release checks."
+  },
+  "claims": [
+    {
+      "id": "order-authentication",
+      "title": "Order creation requires an authenticated customer",
+      "risk": "critical",
+      "whyItMatters": "An unauthenticated order endpoint enables fraud, inventory abuse, and privacy failures.",
+      "evidence": [
+        {
+          "id": "auth-guard-in-source",
+          "type": "file_contains",
+          "file": "fixtures/storefront/api.mjs",
+          "pattern": "if \\(!request\\.user\\?\\.id\\)",
+          "description": "The request boundary rejects callers before order data is created."
+        },
+        {
+          "id": "auth-behavior-test",
+          "type": "command",
+          "command": "node --test fixtures/storefront/api.test.mjs",
+          "expectOutput": "pass 3",
+          "description": "Executable tests exercise the anonymous, malformed, and authenticated paths."
+        }
+      ]
+    },
+    {
+      "id": "error-boundary",
+      "title": "Public error responses never serialize server secrets",
+      "risk": "high",
+      "whyItMatters": "Agent-written error handling often leaks configuration or implementation details.",
+      "evidence": [
+        {
+          "id": "safe-error-contract",
+          "type": "file_contains",
+          "file": "fixtures/storefront/api.mjs",
+          "pattern": "code: 'INVALID_ORDER'",
+          "description": "The public API uses a stable error code rather than returning thrown objects."
+        },
+        {
+          "id": "no-env-serialization",
+          "type": "file_not_contains",
+          "file": "fixtures/storefront/api.mjs",
+          "pattern": "JSON\\.stringify\\(process\\.env\\)",
+          "description": "A narrow static guard catches a high-impact secret-exposure pattern."
+        }
+      ]
+    },
+    {
+      "id": "reviewable-contract",
+      "title": "Every release claim is connected to reproducible evidence",
+      "risk": "medium",
+      "whyItMatters": "A green test suite alone does not tell a reviewer which user promise the tests establish.",
+      "evidence": [
+        {
+          "id": "contract-has-human-explanation",
+          "type": "file_contains",
+          "file": "verity.config.json",
+          "pattern": "whyItMatters",
+          "description": "The configuration requires each claim to explain the user or business risk it protects."
+        },
+        {
+          "id": "fresh-human-approval",
+          "type": "manual",
+          "description": "A reviewer must confirm that the evidence still covers the intended release scope."
+        }
+      ]
+    }
+  ]
+}

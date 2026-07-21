@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-21T08:05:40.310Z",
+  "workspace": "/Users/vishal/Documents/Codex/2026-07-21/analyse-each-and-every-details-in",
+  "project": {
+    "name": "Cedar Storefront",
+    "version": "demo",
+    "description": "A deliberately small API used to demonstrate proof-carrying release checks."
+  },
+  "status": "review",
+  "summary": {
+    "pass": 2,
+    "fail": 0,
+    "review": 1
+  },
+  "chainHead": "f81ceedb1e5de1f54944026fb1e4bf58414869fcbe269717651dd091775202ba",
+  "claims": [
+    {
+      "id": "order-authentication",
+      "title": "Order creation requires an authenticated customer",
+      "risk": "critical",
+      "whyItMatters": "An unauthenticated order endpoint enables fraud, inventory abuse, and privacy failures.",
+      "status": "pass",
+      "evidence": [
+        {
+          "id": "auth-guard-in-source",
+          "type": "file_contains",
+          "description": "The request boundary rejects callers before order data is created.",
+          "status": "pass",
+          "file": "fixtures/storefront/api.mjs",
+          "detail": "Found the expected implementation pattern in fixtures/storefront/api.mjs.",
+          "output": "",
+          "hash": "dcb1c9da8fe196475468ebc880cfc32874ebf5f3ba01fe94a8f3702dd19d8cf4",
+          "previousHash": "GENESIS"
+        },
+        {
+          "id": "auth-behavior-test",
+          "type": "command",
+          "description": "Executable tests exercise the anonymous, malformed, and authenticated paths.",
+          "status": "pass",
+          "detail": "Command completed successfully: node --test fixtures/storefront/api.test.mjs",
+          "command": "node --test fixtures/storefront/api.test.mjs",
+          "output": "✔ rejects anonymous order creation (1.425917ms)\n✔ returns a safe error for malformed orders (0.908625ms)\n✔ accepts an authenticated, valid order (0.153ms)\nℹ tests 3\nℹ suites 0\nℹ pass 3\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 193.645041\n",
+          "hash": "c5e01718732eb2b933966c9e987e94bfb92473b6fe2d4bd668bf2966db060690",
+          "previousHash": "dcb1c9da8fe196475468ebc880cfc32874ebf5f3ba01fe94a8f3702dd19d8cf4"
+        }
+      ]
+    },
+    {
+      "id": "error-boundary",
+      "title": "Public error responses never serialize server secrets",
+      "risk": "high",
+      "whyItMatters": "Agent-written error handling often leaks configuration or implementation details.",
+      "status": "pass",
+      "evidence": [
+        {
+          "id": "safe-error-contract",
+          "type": "file_contains",
+          "description": "The public API uses a stable error code rather than returning thrown objects.",
+          "status": "pass",
+          "file": "fixtures/storefront/api.mjs",
+          "detail": "Found the expected implementation pattern in fixtures/storefront/api.mjs.",
+          "output": "",
+          "hash": "5f0ecfec6d90bfc281dd02621dc48ff6f51d3ea5355050c0f2f1c47ea13b0605",
+          "previousHash": "c5e01718732eb2b933966c9e987e94bfb92473b6fe2d4bd668bf2966db060690"
+        },
+        {
+          "id": "no-env-serialization",
+          "type": "file_not_contains",
+          "description": "A narrow static guard catches a high-impact secret-exposure pattern.",
+          "status": "pass",
+          "file": "fixtures/storefront/api.mjs",
+          "detail": "Did not find the forbidden implementation pattern in fixtures/storefront/api.mjs.",
+          "output": "",
+          "hash": "581048680f0bb16081d26cb39ed30098b5d2e9f5796ffa2d0642c8111a105657",
+          "previousHash": "5f0ecfec6d90bfc281dd02621dc48ff6f51d3ea5355050c0f2f1c47ea13b0605"
+        }
+      ]
+    },
+    {
+      "id": "reviewable-contract",
+      "title": "Every release claim is connected to reproducible evidence",
+      "risk": "medium",
+      "whyItMatters": "A green test suite alone does not tell a reviewer which user promise the tests establish.",
+      "status": "review",
+      "evidence": [
+        {
+          "id": "contract-has-human-explanation",
+          "type": "file_contains",
+          "description": "The configuration requires each claim to explain the user or business risk it protects.",
+          "status": "pass",
+          "file": "verity.config.json",
+          "detail": "Found the expected implementation pattern in verity.config.json.",
+          "output": "",
+          "hash": "639a9119ae8b9b6a6acfd03fcfba95d3f4e1d8298c450dbf746b6cec82cd4e2a",
+          "previousHash": "581048680f0bb16081d26cb39ed30098b5d2e9f5796ffa2d0642c8111a105657"
+        },
+        {
+          "id": "fresh-human-approval",
+          "type": "manual",
+          "description": "A reviewer must confirm that the evidence still covers the intended release scope.",
+          "status": "review",
+          "detail": "Human confirmation required. Verity records this explicitly instead of pretending an automated check proves it.",
+          "output": "",
+          "hash": "f81ceedb1e5de1f54944026fb1e4bf58414869fcbe269717651dd091775202ba",
+          "previousHash": "639a9119ae8b9b6a6acfd03fcfba95d3f4e1d8298c450dbf746b6cec82cd4e2a"
+        }
+      ]
+    }
+  ]
+}

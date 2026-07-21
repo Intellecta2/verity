@@ -1,0 +1,21 @@
+name: Verity release evidence
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  prove-release-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Verify release evidence
+        run: node ./src/cli.mjs report --config verity.config.json --out artifacts/verity-report.html --allow-review
+      - name: Preserve reviewer evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: verity-evidence-report
+          path: artifacts/

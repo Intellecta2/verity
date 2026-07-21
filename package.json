@@ -1,0 +1,21 @@
+{
+  "name": "verity",
+  "version": "0.1.0",
+  "description": "Proof-carrying release gates for AI-assisted code changes.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "verity": "./src/cli.mjs"
+  },
+  "scripts": {
+    "check": "node ./src/cli.mjs check --config verity.config.json",
+    "report": "node ./src/cli.mjs report --config verity.config.json --out artifacts/verity-report.html",
+    "verify": "node ./src/cli.mjs verify --input artifacts/verity-report.json",
+    "demo": "node ./src/cli.mjs report --config verity.config.json --out artifacts/verity-report.html --allow-review && node ./src/cli.mjs verify --input artifacts/verity-report.json",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
