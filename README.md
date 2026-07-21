@@ -32,7 +32,7 @@ npm run demo
 open artifacts/verity-report.html # macOS
 ```
 
-On Linux, open `artifacts/verity-report.html` in your browser. The demo uses the included Cedar Storefront fixture and produces:
+On Linux, open `artifacts/verity-report.html` in your browser. The demo uses the included Cedar Storefront fixture; the report is branded as **Verity Release Evidence** so it is clear that the storefront is only the scenario being checked.
 
 - `artifacts/verity-report.html` — an interactive, self-contained release-evidence report
 - `artifacts/verity-report.json` — the portable report and evidence integrity chain

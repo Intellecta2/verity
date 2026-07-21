@@ -1,9 +1,9 @@
 {
   "$schema": "https://verity.dev/schema/v1",
   "project": {
-    "name": "Cedar Storefront",
-    "version": "demo",
-    "description": "A deliberately small API used to demonstrate proof-carrying release checks."
+    "name": "Verity Release Evidence",
+    "version": "Cedar Storefront sandbox",
+    "description": "A Verity demonstration: release claims and their evidence for a deliberately small storefront API."
   },
   "claims": [
     {
